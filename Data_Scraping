@@ -4,35 +4,24 @@ import csv
 
 Base_url = "https://quotes.toscrape.com"
 url = Base_url
-
 with open("DS.csv", "w", newline="", encoding="utf-8") as file1:
     writer = csv.writer(file1)
     writer.writerow(["Quote", "Author", "Tags"])
-
     while url:
         response = requests.get(url)
         content = BeautifulSoup(response.text, "html.parser")
-
         quotes = content.find_all("div", class_="quote")
-
         for q in quotes:
             text = q.find("span", class_="text").text
             author = q.find("small", class_="author").text
-
             tags = q.find_all("a", class_="tag")
             taglist = []
-
             for tag in tags:
                 taglist.append(tag.text)
-
-            
             tagstring = ",".join(taglist)
-
             writer.writerow([text, author, tagstring])
-
             print(text, "-", author)
             print(tagstring)
-
         next_button = content.find("li", class_="next")
         if next_button:
             next_page = next_button.find("a")["href"]
