@@ -25,7 +25,7 @@ with open("DS.csv", "w", newline="", encoding="utf-8") as file1:
             for tag in tags:
                 taglist.append(tag.text)
 
-            # ✅ FIX: create tagstring
+            
             tagstring = ",".join(taglist)
 
             writer.writerow([text, author, tagstring])
